@@ -58,10 +58,28 @@ namespace game_bulls_and_cows
             // Преобазуем строку в массив чисел
             int[] guessed = guess.Select(x => int.Parse(x)).ToArray();
             
-            // 
-            int bullsCount = 0, cowsCount = 0; //Инициируем счетчик, для подсчета быков и коров
+            // Считаем количество быков и коров
+            int bullsCount = 0, cowsCount = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (quessed[i] == num[i])
+                {
+                    bullsCount++;
+                }
+                else
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (guessed[i] == num[j])
+                        {
+                            cowsCount++;
+                        }
+                    }
+                }
+            }
 
-            if (guessed.Length != 4) //Проверяем длину ввода числа игрока
+            //Проверяем длину ввода числа игрока
+            if (guessed.Length != 4) 
             {
                 Console.WriteLine("Not a valid guess. Please enter 4 NUMS, 1 - 9 only"); //Выводим сообщение о недопустимом вводе, просим вводить только 4 цифры, от 1 до 9
                 return false;
