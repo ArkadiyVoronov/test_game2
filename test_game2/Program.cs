@@ -78,45 +78,15 @@ namespace game_bulls_and_cows
                 }
             }
 
-            //Проверяем длину ввода числа игрока
-            if (guessed.Length != 4) 
+            //Проверяем, угадано ли число
+            if (bullsCount == 4) 
             {
-                Console.WriteLine("Not a valid guess. Please enter 4 NUMS, 1 - 9 only"); //Выводим сообщение о недопустимом вводе, просим вводить только 4 цифры, от 1 до 9
-                return false;
-            }
-            //Проверяем на недопустимость ввода 0
-            for (int i = 0; i < 4; i++)
-            {
-                int curguess = (int)char.GetNumericValue(guessed[i]);
-                if (curguess < 1 || curguess > 9)
-                {
-                    Console.WriteLine("Not a valid guess. Please Enter only numbers 1 through 9."); //Выводим сообщение о недопустимом вводе нуля, ввод должен содержать цифру больше нуля и меньше 10
-                    return false;
-                }
-                if (curguess == num[i])
-                {
-                    bullsCount++; //Считаем количество угаданных быков
-                }
-                else
-                {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        if (curguess == num[j])
-                            cowsCount++; //Считаем количество угаданных коров
-                    }
-                }
-            }
-            
-            //Правило выйгрыша
-            //Угаданны все 4 числа, в нужной последовательности
-            if (bullsCount == 4)
-            {
-                Console.WriteLine("Congratulations! You have won!"); //Поздравления для игрока
+                Console.WriteLine("Congratulations! You have won!");
                 return true;
             }
             else
             {
-                Console.WriteLine("Your Score is {0} bulls and {1} cows", bullsCount, cowsCount); //Сообщение для игрока о количестве быков и коров, в его варианте
+                Console.WriteLine("Your Score is {0} bulls and {1} cows", bullsCount, cowsCount);
                 return false;
             }
         }
