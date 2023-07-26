@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace game_bulls_and_cows
 {
@@ -7,32 +8,40 @@ namespace game_bulls_and_cows
 
         static void Main(string[] args)
         {
-            //Массив, состоящий из 4 цифр 
-            //Принимает только цифры от 1 до 9
+            // Создаем массив цифр от 1 до 9
             int[] nums = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            KnuthShuffle<int>(ref nums);
-            int[] chosenNum = new int[4];
-            Array.Copy(nums, chosenNum, 4);
+            
+            // Перемешиваем массив чисел
+            KnuthShuffle(ref nums);
+            
+            // Выбираем случайное число из массива
+            int chosenNum = nums[random.Next(nums.Length)];
 
-            //Правила игры
+            //Выводим правила игры
             Console.WriteLine("Lets play the game 'Bulls and cows'! Short rules :");
             Console.WriteLine("You have to guess the number.");
             Console.WriteLine("The number is four-digit and does not contain zero !");
             Console.WriteLine("If the figure from the named number is in the guessed number, then this situation is called 'cow'.");
             Console.WriteLine("If the figure from the named number is in the guessed number and stands in the same place, then this situation is called 'bull'.");
             Console.WriteLine("Good luck !");
-            //Приглашаем игрока ввести свой вариант
+            
+            //Запрашиваем у игрока ввод
             Console.WriteLine("Your Guess ?");
 
-            //Играем, пока не угадаем
+            //Играем, пока игрок не угадает число
             while (!game(Console.ReadLine(), chosenNum))
             {
-                Console.WriteLine("Your next Guess ?"); //Приглашаем игрока еще попробывать угадать
+                Console.WriteLine("Your next Guess ?");
             }
+            
+            // Поздравляем игрока с победой
+            Console.WriteLine("Congratulations! You have won!");
 
-            Console.ReadKey(); //Читаем ввод игрока
+            // Закрываем консоль
+            Console.ReadKey();
         }
-        //Генератор случайных чисел
+        
+        // Функция перемешивания массива чисел
         public static void KnuthShuffle<T>(ref T[] array)
         {
             System.Random random = new System.Random();
@@ -43,10 +52,13 @@ namespace game_bulls_and_cows
             }
         }
 
-        //Игра, поведение, правила
+        //Функция игры
         public static bool game(string guess, int[] num)
         {
-            char[] guessed = guess.ToCharArray(); //Проверяем ввод игрока
+            // Преобазуем строку в массив чисел
+            int[] guessed = guess.Select(x => int.Parse(x)).ToArray();
+            
+            // 
             int bullsCount = 0, cowsCount = 0; //Инициируем счетчик, для подсчета быков и коров
 
             if (guessed.Length != 4) //Проверяем длину ввода числа игрока
